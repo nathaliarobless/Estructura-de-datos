@@ -1,0 +1,154 @@
+#include<iostream>
+#define tam 3
+
+using namespace std;
+
+class CColaCircular{
+
+public:
+    int arreglo[tam];
+    int frente;
+    int fin;
+
+public:
+    CColaCircular();
+    void insertarElemento(int ele);
+    int sacarElemento();
+    int getFrente();
+    int getFin();
+    int esColaVacia();
+    int esColaLlena();
+    void mostrarElementos();
+};
+
+CColaCircular::CColaCircular(){
+    frente=0;
+    fin=0;
+}
+
+void CColaCircular::insertarElemento(int ele){
+    if (esColaLlena()== 0){
+            if(fin==-1)//condicion que verifica si se inserta el primer elemento
+            fin==0;
+        arreglo[fin]=ele;
+        fin=fin+1;
+        if (fin==tam)//generamos enlace circular
+            fin=0;
+    }
+    else{
+        cout<<"Imposible insertar"<<endl;
+    }
+}
+
+int CColaCircular::sacarElemento(){
+    if (esColaVacia()==0){
+        frente=frente +1;
+        if (frente==tam)
+            frente=0;
+        return arreglo[frente-1];
+    }
+    else{
+        cout<<"Imposible sacar"<<endl;
+        return 0;
+    }
+}
+
+int CColaCircular::getFrente(){
+    if (esColaVacia()==1){
+        cout<<"Cola vacia"<<endl;
+    }
+    else{
+    return arreglo[frente];
+    }
+}
+
+int CColaCircular::getFin(){
+    return arreglo[fin-1];
+}
+
+int CColaCircular::esColaVacia(){
+    if (frente == fin){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int CColaCircular::esColaLlena(){
+    cout<<"fin"<<fin;
+    if (fin==tam){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+void CColaCircular::mostrarElementos(){
+    int i;
+    cout<<"Los elementos en la Cola son:"<<endl;
+    for(i=frente;i<fin;i++){
+        cout<<arreglo[i]<<endl;
+    }
+}
+
+
+int main(){
+
+ CColaCircular C1;
+    int op=0;
+    int e;
+
+do{
+    cout<<"\n\nMenu de la cola \n";
+    cout<<"1) Insertar elemento  \n";
+    cout<<"2) Sacar elemento  \n";
+    cout<<"3) Obtener elemento frente\n";
+    cout<<"4) Obtener elemento final\n";
+    cout<<"5) Mostrar elementos\n";
+    cout<<"6) Salir\n";
+    cout<<"Opcion a elegir: ";
+    cin>>op;
+
+    switch (op) {
+        case 1:{
+        	        cout<<"\n¿Que elemento deseas insertar? ";
+        	        cin>> e;
+            		C1.insertarElemento(e);
+		     		break;
+	     	   }
+
+        case 2:{
+
+        	        e= C1.sacarElemento();
+        	        cout<<"\nElemento eliminado:"<<e;
+					break;
+				}
+
+        case 3:{
+        	        cout<<"\nEl elemento en el frente es:"<<C1.getFrente();
+					break;
+				}
+
+        case 4:{
+        	        cout<<"\nEl elemento en el final es:"<<C1.getFin();
+					break;
+				}
+        case 5:{
+
+					C1.mostrarElementos();
+					break;
+		       }
+         case 6:{
+
+					cout<<"\nAdios"<<endl;;
+					break;
+		       }
+            default:
+                 cout<<"\nLas opciones son 1, 2, 3,  4 y 5.\n";
+            break;
+    }
+}while(op != 6);
+    return 0;
+}
