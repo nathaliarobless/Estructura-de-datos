@@ -23,17 +23,19 @@ public:
 
 CColaCircular::CColaCircular(){
     frente=0;
-    fin=0;
+    fin=-1;
 }
 
 void CColaCircular::insertarElemento(int ele){
-    if (esColaLlena()== 0){
-            if(fin==-1)//condicion que verifica si se inserta el primer elemento
+    if (esColaLlena()==0){
+            if(fin==-1){//condicion que verifica si se inserta el primer elemento
             fin==0;
         arreglo[fin]=ele;
         fin=fin+1;
-        if (fin==tam)//generamos enlace circular
+            }
+        if (fin==tam){//generamos enlace circular
             fin=0;
+        }
     }
     else{
         cout<<"Imposible insertar"<<endl;
@@ -41,11 +43,17 @@ void CColaCircular::insertarElemento(int ele){
 }
 
 int CColaCircular::sacarElemento(){
+    int aux;
     if (esColaVacia()==0){
-        frente=frente +1;
+    if(frente==fin){ //si se saca el ultimo elemento
+        aux=arreglo[frente];
+        frente=0;
+        fin=-1;
+    }
         if (frente==tam)
             frente=0;
-        return arreglo[frente-1];
+            frente=frente+1;
+        return aux;
     }
     else{
         cout<<"Imposible sacar"<<endl;
@@ -54,20 +62,30 @@ int CColaCircular::sacarElemento(){
 }
 
 int CColaCircular::getFrente(){
-    if (esColaVacia()==1){
-        cout<<"Cola vacia"<<endl;
+    if (esColaVacia()==0){
+        return arreglo[frente];
     }
     else{
-    return arreglo[frente];
+        cout<<"No hay elementos"<<endl;
     }
 }
 
 int CColaCircular::getFin(){
-    return arreglo[fin-1];
+    if (esColaVacia()==0){
+            if(fin==0){ //verificar mostrar enlace
+                return arreglo[tam-1];
+            }
+        else{
+        return arreglo[fin-1];
+        }
+    }
+    else{
+        cout<<"No hay elementos"<<endl;
+    }
 }
 
 int CColaCircular::esColaVacia(){
-    if (frente == fin){
+    if ((frente==fin) && (fin==-1)){
         return 1;
     }
     else{
@@ -76,8 +94,7 @@ int CColaCircular::esColaVacia(){
 }
 
 int CColaCircular::esColaLlena(){
-    cout<<"fin"<<fin;
-    if (fin==tam){
+    if (frente==fin){
         return 1;
     }
     else{
@@ -86,13 +103,27 @@ int CColaCircular::esColaLlena(){
 }
 
 void CColaCircular::mostrarElementos(){
-    int i;
-    cout<<"Los elementos en la Cola son:"<<endl;
-    for(i=frente;i<fin;i++){
+
+if(esColaVacia()==1){
+    cout<<"No hay elementos"<<endl;
+}
+else{
+    if (frente<fin){
+        for (int i=frente;i<fin;i++){
+            cout<<arreglo[i]<<endl;
+        }
+    }
+    else{
+    //imprimimos el enlace circular
+    for(int i=frente;i<tam;i++){
         cout<<arreglo[i]<<endl;
     }
+    for(int i=0;i<fin;i++){
+        cout<<arreglo[i]<<endl;
+    }
+    }
 }
-
+}
 
 int main(){
 
@@ -101,9 +132,9 @@ int main(){
     int e;
 
 do{
-    cout<<"\n\nMenu de la cola \n";
-    cout<<"1) Insertar elemento  \n";
-    cout<<"2) Sacar elemento  \n";
+    cout<<"\n\nMenu de la cola\n";
+    cout<<"1) Insertar elemento\n";
+    cout<<"2) Sacar elemento\n";
     cout<<"3) Obtener elemento frente\n";
     cout<<"4) Obtener elemento final\n";
     cout<<"5) Mostrar elementos\n";
@@ -145,10 +176,10 @@ do{
 					cout<<"\nAdios"<<endl;;
 					break;
 		       }
-            default:
-                 cout<<"\nLas opciones son 1, 2, 3,  4 y 5.\n";
+
             break;
     }
 }while(op != 6);
-    return 0;
+
+return 0;
 }
